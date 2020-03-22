@@ -2,6 +2,7 @@
 #include "BazaTestu.hh"
 #include "LZespolona.hh"
 #include "WyrazenieZesp.hh"
+
 using namespace std;
 
 
@@ -31,39 +32,25 @@ int main(int argc, char **argv)
   cout << " Start testu arytmetyki zespolonej: " << argv[1] << endl;
   cout << endl;
 
-  Stat test;
+  
   WyrazenieZesp   WyrZ_PytanieTestowe;
-  LZespolona Wynik_Poprawny;
-  LZespolona Wynik_Podany;
-  int dobre;
-  float procent;
+  LZespolona Wynik;
 
    cout<<"Witaj na sprawdzianie z liczb zespolonych"<<endl;
-   inicjuj_statystyki(test);
-  while (PobierzNastpnePytanie(&BazaT,&WyrZ_PytanieTestowe)==1) {
-    cout<<"Oto twoje zadanie:"<<endl;
-    Wyswietl(WyrZ_PytanieTestowe);
-    Oblicz(WyrZ_PytanieTestowe)=Wynik_Poprawny;
-    if (Wczytaj(Wynik_Podany)==0)
-    for(int i=1;i<3;i++){ 
-    cout<<"Blad! Prosze wprowadzic liczbe ponownie"<<endl;
-    if (Wczytaj(Wynik_Podany)==0)
-    continue;
-    else break;
+    
+    
+   while (PobierzNastpnePytanie(&BazaT,&WyrZ_PytanieTestowe)==1) {
+   cout<<"Oto twe zadanie:"<<endl;
+    if(Wczytaj(WyrZ_PytanieTestowe)==1){
+    cout<<Oblicz(WyrZ_PytanieTestowe);
     }
-   if ((Wynik_Podany==Wynik_Poprawny)==0){
-    cout<<"Bledny wynik :("<<endl;
-    dodaj_zla(test);
+    else{
+    cout<<"Jakis nieprzewidziany blad sie wkradl :("<<endl;
+    cin.clear();
+    cin.ignore(1000, '\n');
     }
-    else if((Wynik_Podany==Wynik_Poprawny)==1){
-    cout<<"Poprawny wynik :)"<<endl;
-    dodaj_dobra(test);
-    }
-
   }
-  dobre=ilosc_dobrych(test);
-  procent=procent_dobrych(test);
-  wyswietl_wynik(dobre,procent);
+ 
   cout << endl;
   cout << " Koniec testu" << endl;
   cout << endl;

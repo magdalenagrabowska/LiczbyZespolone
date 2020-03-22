@@ -1,20 +1,20 @@
 #include "WyrazenieZesp.hh"
 #include "LZespolona.hh"
 #include<iostream>
-using std::cout;
 using std::endl;
+using std::cout;
 using std::cin;
-/*
+/* 
  * Tu nalezy zdefiniowac funkcje, ktorych zapowiedzi znajduja sie
  * w pliku naglowkowym.
  */
 void Wyswietl(WyrazenieZesp  WyrZ){
-    WyswietlZ(WyrZ.Arg1);
+    cout<<WyrZ.Arg1;
     if(WyrZ.Op==Operator::Op_Dodaj){
-        cout<<"+";
+       cout<<"+";
         }
     else if(WyrZ.Op==Operator::Op_Odejmij){
-        cout<<"-";
+       cout<<"-";
         }
     else if(WyrZ.Op==Operator::Op_Mnoz){
         cout<<"*";
@@ -22,10 +22,44 @@ void Wyswietl(WyrazenieZesp  WyrZ){
     else if(WyrZ.Op==Operator::Op_Dziel){
         cout<<"/";
         }
-   WyswietlZ(WyrZ.Arg2);
+   cout<<WyrZ.Arg2;
    cout<<endl;
 }
-LZespolona Oblicz(WyrazenieZesp  WyrZ){
+std::istream &operator>> (std::istream &strm, WyrazenieZesp &WZ) {
+  strm>>WZ.Arg1;
+  if(strm.fail())
+  return strm;
+  WczytajOper();
+  strm>>WZ.Arg2;
+  if(strm.fail())
+  return strm;
+}
+bool Wczytaj(WyrazenieZesp &WZ){
+    cin>>WZ;
+    return 1;
+}
+Operator WczytajOper(){
+  char tmp;
+  cin>>tmp;
+  switch(tmp){
+  case '+':{
+    return Op_Dodaj;
+    break;}
+  case '-':{
+    return Op_Odejmij;
+    break;}
+  case '*':{
+    return Op_Mnoz;
+    break;}
+  case '/':{
+    return Op_Dziel;
+    break;}
+  default:{
+  cout<<"Nierozpoznane dzialanie"<<endl;
+  return Op_Dodaj;  }
+  }
+}
+LZespolona Oblicz(WyrazenieZesp WyrZ){
     LZespolona Wynik;
     switch(WyrZ.Op){
         case Operator::Op_Dodaj:
@@ -53,7 +87,7 @@ LZespolona Oblicz(WyrazenieZesp  WyrZ){
          break;
         }
         default:
-        cout<<"Nierozpoznane dzialanie"<<endl;
+       cout<<"Nierozpoznane dzialanie"<<endl;
         Wynik.re=0;
         Wynik.im=0;
         return Wynik;
