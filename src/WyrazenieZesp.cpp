@@ -8,56 +8,62 @@ using std::cin;
  * Tu nalezy zdefiniowac funkcje, ktorych zapowiedzi znajduja sie
  * w pliku naglowkowym.
  */
-void Wyswietl(WyrazenieZesp  WyrZ){
-    cout<<WyrZ.Arg1;
-    if(WyrZ.Op==Operator::Op_Dodaj){
-       cout<<"+";
+std::ostream & operator<< (std::ostream &strm, const WyrazenieZesp &Z1){
+    strm<<Z1.Arg1;
+    if(strm.fail())
+    return strm;
+    if(Z1.Op==Operator::Op_Dodaj){
+       strm<<"+";
         }
-    else if(WyrZ.Op==Operator::Op_Odejmij){
-       cout<<"-";
+    else if(Z1.Op==Operator::Op_Odejmij){
+       strm<<"-";
         }
-    else if(WyrZ.Op==Operator::Op_Mnoz){
-        cout<<"*";
+    else if(Z1.Op==Operator::Op_Mnoz){
+        strm<<"*";
         }
-    else if(WyrZ.Op==Operator::Op_Dziel){
-        cout<<"/";
+    else if(Z1.Op==Operator::Op_Dziel){
+        strm<<"/";
         }
-   cout<<WyrZ.Arg2;
-   cout<<endl;
+      if (strm.fail())
+      return strm;
+   strm<<Z1.Arg2;
+   if(strm.fail())
+   return strm;
+   strm<<endl;
 }
+
 std::istream &operator>> (std::istream &strm, WyrazenieZesp &WZ) {
   strm>>WZ.Arg1;
   if(strm.fail())
   return strm;
-  WczytajOper();
-  strm>>WZ.Arg2;
+  strm>>WZ.Op;
   if(strm.fail())
   return strm;
+  strm>>WZ.Arg2;
+  if(strm.fail())
+ return strm;
 }
-bool Wczytaj(WyrazenieZesp &WZ){
-    cin>>WZ;
-    return 1;
-}
-Operator WczytajOper(){
+std::istream &operator>> (std::istream &strm, Operator &Op){
   char tmp;
-  cin>>tmp;
+  strm>>tmp;
   switch(tmp){
   case '+':{
-    return Op_Dodaj;
+    Op=Op_Dodaj;
     break;}
   case '-':{
-    return Op_Odejmij;
+    Op=Op_Odejmij;
     break;}
   case '*':{
-    return Op_Mnoz;
+    Op=Op_Mnoz;
     break;}
   case '/':{
-    return Op_Dziel;
+    Op=Op_Dziel;
     break;}
   default:{
-  cout<<"Nierozpoznane dzialanie"<<endl;
-  return Op_Dodaj;  }
+  strm.setstate(std::ios::failbit);  
   }
+  }
+ return strm;
 }
 LZespolona Oblicz(WyrazenieZesp WyrZ){
     LZespolona Wynik;

@@ -24,10 +24,9 @@ struct WyrazenieZesp {
  * Funkcje ponizej nalezy zdefiniowac w module.
  *
  */
-Operator WczytajOper();
-void Wyswietl(WyrazenieZesp  WyrZ);
-bool Wczytaj(WyrazenieZesp &WZ);
 std::istream &operator>> (std::istream &strm, WyrazenieZesp &WZ);
+std::istream &operator>> (std::istream &strm, Operator &Op);
+std::ostream & operator<< (std::ostream &strm, const WyrazenieZesp &Z1);
 LZespolona Oblicz(WyrazenieZesp  WyrZ);
 
 #endif
